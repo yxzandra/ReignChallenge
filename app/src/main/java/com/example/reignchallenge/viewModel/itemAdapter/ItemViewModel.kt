@@ -27,10 +27,10 @@ class ItemViewModel(var mHitsItem: Hit): BaseObservable() {
         var subtitle = ""
         
         if (mHitsItem.author!!.isNotEmpty())
-            subtitle = mHitsItem.author!! + " - "
+            subtitle = mHitsItem.author!!
         
         if (mHitsItem.createdAt!!.isNotEmpty())
-            subtitle += Helpers.convertDate(mHitsItem.createdAt!!)
+            subtitle += " - " + Helpers.differenceWithCurrentDate(mHitsItem.createdAt!!)
 
         return subtitle
         
