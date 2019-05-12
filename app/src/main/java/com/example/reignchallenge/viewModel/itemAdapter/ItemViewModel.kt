@@ -11,14 +11,15 @@ import com.example.reignchallenge.util.Helpers
 
 
 
-class ItemPullViewModel(var mHitsItem: Hit): BaseObservable() {
+class ItemViewModel(var mHitsItem: Hit): BaseObservable() {
     val TAG = javaClass.simpleName
 
     fun hitsTitle(): String{
-        return when {
-            mHitsItem.storyTitle!!.isNotEmpty() -> mHitsItem.storyTitle!!
-            mHitsItem.title!!.isNotEmpty() -> mHitsItem.title!!
+        return when{
+            !mHitsItem.storyTitle.isNullOrEmpty() -> mHitsItem.storyTitle!!
+            !mHitsItem.title.isNullOrEmpty() -> mHitsItem.title!!
             else -> ""
+
         }
     }
 

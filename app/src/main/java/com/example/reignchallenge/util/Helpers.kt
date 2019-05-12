@@ -7,7 +7,7 @@ object Helpers{
 
     @JvmStatic
     fun convertDate(date: String): String{
-        val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
+        val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
         format.timeZone = TimeZone.getTimeZone("UTC")
         val parse = format.parse(date)
 

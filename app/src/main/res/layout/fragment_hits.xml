@@ -17,7 +17,7 @@
             android:background="@android:color/white">
 
         <ProgressBar
-                android:id="@+id/pull_progress"
+                android:id="@+id/progress_hits"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
@@ -27,7 +27,7 @@
                 android:visibility="@{fragmentHitsViewModel.hitsProgress}"/>
 
         <TextView
-                android:id="@+id/pull_textview"
+                android:id="@+id/textview_hits"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
@@ -39,7 +39,7 @@
                 android:visibility="@{fragmentHitsViewModel.hitsLabel}"/>
 
         <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_pull"
+                android:id="@+id/recycler_hits"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

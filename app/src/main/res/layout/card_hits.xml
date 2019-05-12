@@ -4,7 +4,7 @@
     <data>
         <variable
                 name="hitsViewModel"
-                type="com.example.reignchallenge.viewModel.itemAdapter.ItemPullViewModel"/>
+                type="com.example.reignchallenge.viewModel.itemAdapter.ItemViewModel"/>
     </data>
     <LinearLayout
             android:id="@+id/card_hits"
@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:onClick="@{hitsViewModel::onItemClick}"
             android:padding="@dimen/card_padding"
-            android:elevation="@dimen/card_elevation"
+            android:layout_margin="@dimen/card_margin"
             android:background="@android:color/white">
         <TextView
                 android:id="@+id/title_text"
@@ -22,7 +22,10 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
                 android:text="@{hitsViewModel.hitsTitle}"
                 android:textColor="@color/colorPrimaryText"
-                tools:text="India orders anti-trust probe of Google for alleged Android abuse"/>
+                tools:text="India orders anti-trust probe of Google for alleged Android abuse"
+                android:lines="3"
+        />
+
         <TextView
                 android:id="@+id/author_text"
                 android:layout_width="match_parent"
