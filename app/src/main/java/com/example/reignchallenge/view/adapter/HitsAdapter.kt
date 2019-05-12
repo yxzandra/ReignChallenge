@@ -11,7 +11,7 @@ import com.example.reignchallenge.viewModel.itemAdapter.ItemViewModel
 
 class HitsAdapter : RecyclerView.Adapter<HitsAdapter.HitsAdapterViewHolder>() {
     val TAG = javaClass.simpleName
-    private var pullList: List<Hit>? = null
+    private var pullList: MutableList<Hit>? = null
 
     override fun getItemCount(): Int {
         if (pullList == null)
@@ -20,7 +20,7 @@ class HitsAdapter : RecyclerView.Adapter<HitsAdapter.HitsAdapterViewHolder>() {
     }
 
     internal fun setPullList(pullList: List<Hit>) {
-        this.pullList = pullList
+        this.pullList = pullList.toMutableList()
         notifyDataSetChanged()
     }
 
@@ -33,6 +33,11 @@ class HitsAdapter : RecyclerView.Adapter<HitsAdapter.HitsAdapterViewHolder>() {
             parent, false)
 
         return HitsAdapterViewHolder(itemPeopleBinding)
+    }
+
+    fun removeAt(position: Int) {
+        pullList?.removeAt(position)
+        notifyItemRemoved(position)
     }
 
     class HitsAdapterViewHolder(
