@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+                name="hitsViewModel"
+                type="com.example.reignchallenge.viewModel.itemAdapter.ItemPullViewModel"/>
+    </data>
+    <LinearLayout
+            android:id="@+id/card_hits"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{hitsViewModel::onItemClick}"
+            android:padding="@dimen/card_padding"
+            android:elevation="@dimen/card_elevation"
+            android:background="@android:color/white">
+        <TextView
+                android:id="@+id/title_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+                android:text="@{hitsViewModel.hitsTitle}"
+                android:textColor="@color/colorPrimaryText"
+                tools:text="India orders anti-trust probe of Google for alleged Android abuse"/>
+        <TextView
+                android:id="@+id/author_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{hitsViewModel.hitsSubtitle}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
+                android:textColor="@color/colorSecondaryText"
+                tools:text="wtmt - 2019-05-11T14:28:11.000Z"/>
+    </LinearLayout>
+</layout>

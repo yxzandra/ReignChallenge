@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+                name="fragmentHitsViewModel"
+                type="com.example.reignchallenge.viewModel.fragment.HitsViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_pull"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:showIn="@layout/activity_main"
+            android:background="@android:color/white">
+
+        <ProgressBar
+                android:id="@+id/pull_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:visibility="@{fragmentHitsViewModel.hitsProgress}"/>
+
+        <TextView
+                android:id="@+id/pull_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:gravity="center"
+                android:text="@{fragmentHitsViewModel.messageLabel}"
+                android:visibility="@{fragmentHitsViewModel.hitsLabel}"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_pull"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/card_hits"
+                android:background="@color/colorDivider"
+                android:visibility="@{fragmentHitsViewModel.hitsRecycler}"
+        />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
