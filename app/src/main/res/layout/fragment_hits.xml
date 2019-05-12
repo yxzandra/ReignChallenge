@@ -38,15 +38,19 @@
                 android:text="@{fragmentHitsViewModel.messageLabel}"
                 android:visibility="@{fragmentHitsViewModel.hitsLabel}"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_hits"
-                app:layout_constraintTop_toTopOf="parent"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipeRefreshLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:listitem="@layout/card_hits"
-                android:background="@color/colorDivider"
-                android:visibility="@{fragmentHitsViewModel.hitsRecycler}"
-        />
+                android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_hits"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/card_hits"
+                    android:background="@color/colorDivider"
+                    android:visibility="@{fragmentHitsViewModel.hitsRecycler}"/>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

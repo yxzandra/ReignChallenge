@@ -38,12 +38,12 @@ class ItemViewModel(var mHitsItem: Hit): BaseObservable() {
 
     fun onItemClick(view: View) {
         when {
-            mHitsItem.storyUrl!!.isNotEmpty() -> {
+            !mHitsItem.storyUrl.isNullOrEmpty() -> {
                 Log.i(TAG, mHitsItem.storyUrl)
                 val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(mHitsItem.storyUrl))
                 view.context.startActivity(browserIntent)
             }
-            mHitsItem.url!!.isNotEmpty() -> {
+            !mHitsItem.url.isNullOrEmpty() -> {
                 val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(mHitsItem.url))
                 view.context.startActivity(browserIntent)
             }
