@@ -9,15 +9,17 @@ import com.example.reignchallenge.R
 import com.example.reignchallenge.view.fragment.HitsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+
+
+class MainActivity : AppCompatActivity(), FragmentManager.OnBackStackChangedListener {
     val TAG : String = javaClass.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+        supportFragmentManager.addOnBackStackChangedListener(this)
         showView()
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -26,6 +28,17 @@ class MainActivity : AppCompatActivity() {
                 onBackPressed()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackStackChanged() {
+        val canGoBack = supportFragmentManager.backStackEntryCount > 1
+        supportActionBar!!.setDisplayHomeAsUpEnabled(canGoBack)
+
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        supportFragmentManager.popBackStack()
+        return true
     }
 
     private fun showView() {

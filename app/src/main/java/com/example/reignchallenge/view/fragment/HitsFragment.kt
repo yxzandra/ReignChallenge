@@ -21,7 +21,7 @@ class HitsFragment : Fragment(), Observer{
     val TAG = javaClass.name
     private var hitsFragmentBinding: FragmentHitsBinding? = null
     private var hitsViewModel: HitsViewModel? = null
-    private var adapter = HitsAdapter()
+    private var adapter: HitsAdapter? = null
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -52,7 +52,8 @@ class HitsFragment : Fragment(), Observer{
         if (p0 == hitsViewModel){
             recycler_hits.adapter = adapter
             recycler_hits.layoutManager = LinearLayoutManager(context)
-            adapter.setPullList(hitsViewModel!!.hitList!!)
+            adapter = HitsAdapter(activity!!.supportFragmentManager)
+            adapter!!.setPullList(hitsViewModel!!.hitList!!)
             recycler_hits.adapter = adapter
             val swipeHandler = object : SwipeToDeleteCallback(context!!) {
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {

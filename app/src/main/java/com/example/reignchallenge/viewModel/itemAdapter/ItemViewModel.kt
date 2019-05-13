@@ -1,17 +1,20 @@
 package com.example.reignchallenge.viewModel.itemAdapter
 
-import android.content.Intent
-import android.net.Uri
+import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.BaseObservable
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import com.example.reignchallenge.R
 import com.example.reignchallenge.schema.Hit
 import com.example.reignchallenge.util.Helpers
+import com.example.reignchallenge.view.fragment.HitsDetailFragment
+import com.example.reignchallenge.view.fragment.HitsFragment
 
 
-
-class ItemViewModel(var mHitsItem: Hit): BaseObservable() {
+class ItemViewModel(var mHitsItem: Hit, var fragmentManager: FragmentManager): BaseObservable() {
     val TAG = javaClass.simpleName
 
     fun hitsTitle(): String{
@@ -40,18 +43,27 @@ class ItemViewModel(var mHitsItem: Hit): BaseObservable() {
         when {
             !mHitsItem.storyUrl.isNullOrEmpty() -> {
                 Log.i(TAG, mHitsItem.storyUrl)
-                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(mHitsItem.storyUrl))
-                view.context.startActivity(browserIntent)
+                openWebViewFragment(mHitsItem.storyUrl!!, view)
             }
             !mHitsItem.url.isNullOrEmpty() -> {
-                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(mHitsItem.url))
-                view.context.startActivity(browserIntent)
+                openWebViewFragment(mHitsItem.url!!,view)
             }
             else -> Toast.makeText(
                 view.context, "Not conains URL",
                 Toast.LENGTH_LONG
             ).show()
         }
+    }
+
+    private fun openWebViewFragment(url: String, view : View) {
+        val bundle = Bundle()
+        bundle.putString(view.context.getString(R.string.bundle_url), url)
+        val fragmentTransaction : FragmentTransaction = fragmentManager.beginTransaction()
+        val repositoryFragment = HitsDetailFragment()
+        repositoryFragment.arguments = bundle
+        fragmentTransaction.add(R.id.fragment_container,repositoryFragment)
+            .addToBackStack(HitsFragment().TAG)
+            .commit()
     }
 
 
