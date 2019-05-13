@@ -39,7 +39,7 @@ class HitsViewModel : Observable() {
         val apiService = RetrofitClient.getClient().create(ApiInterface::class.java)
         GlobalScope.launch ( Dispatchers.Main) {
             try {
-                apiService.getHits("android", 0).await().let {
+                apiService.getHitsAsync("android").await().let {
                     hitsProgress.set(View.GONE)
 
                     if (it.isSuccessful && it.body() != null){

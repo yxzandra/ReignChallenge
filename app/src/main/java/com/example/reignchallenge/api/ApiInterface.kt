@@ -10,9 +10,7 @@ interface ApiInterface {
 
     //Get Hits list for date
     @GET("search_by_date")
-    fun getHits(
-        @Query("query") platform: String,
-        @Query("page") page: Int
-    ): Deferred<Response<ObjectHits>>
+    fun getHitsAsync(
+        @Query("query") platform: String): Deferred<Response<ObjectHits>>
 }
 

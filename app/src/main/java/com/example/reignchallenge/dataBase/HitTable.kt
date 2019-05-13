@@ -1,6 +1,7 @@
 package com.example.reignchallenge.dataBase
 
-import io.realm.RealmObject import io.realm.annotations.PrimaryKey
+import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
 
 open class HitTable(
     @PrimaryKey var id: Long = 0,
@@ -12,5 +13,4 @@ open class HitTable(
     var title: String = "",
 
     var url: String = ""
-
 ) : RealmObject()

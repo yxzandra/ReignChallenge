@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.reignchallenge.R
 import com.example.reignchallenge.databinding.CardHitsBinding
-import com.example.reignchallenge.api.response.Hit
+import com.example.reignchallenge.dataBase.DataBaseTransaction
 import com.example.reignchallenge.dataBase.HitTable
 import com.example.reignchallenge.viewModel.itemAdapter.ItemViewModel
 
@@ -38,6 +38,8 @@ class HitsAdapter(private val fragmentManager: FragmentManager) : RecyclerView.A
     }
 
     fun removeAt(position: Int) {
+        val dataBaseTransaction = DataBaseTransaction()
+        dataBaseTransaction.deleteHit(hitListTable!![position].id)
         hitListTable?.removeAt(position)
         notifyItemRemoved(position)
     }

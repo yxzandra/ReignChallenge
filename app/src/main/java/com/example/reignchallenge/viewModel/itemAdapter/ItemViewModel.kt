@@ -8,7 +8,6 @@ import androidx.databinding.BaseObservable
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.example.reignchallenge.R
-import com.example.reignchallenge.api.response.Hit
 import com.example.reignchallenge.dataBase.HitTable
 import com.example.reignchallenge.util.Helpers
 import com.example.reignchallenge.view.fragment.HitsDetailFragment
