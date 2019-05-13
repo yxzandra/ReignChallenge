@@ -1,6 +1,6 @@
 package com.example.reignchallenge.api
 
-import com.example.reignchallenge.schema.ObjectHits
+import com.example.reignchallenge.api.response.ObjectHits
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.http.GET

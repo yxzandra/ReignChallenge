@@ -53,8 +53,9 @@ class HitsFragment : Fragment(), Observer{
             recycler_hits.adapter = adapter
             recycler_hits.layoutManager = LinearLayoutManager(context)
             adapter = HitsAdapter(activity!!.supportFragmentManager)
-            adapter!!.setPullList(hitsViewModel!!.hitList!!)
+            adapter!!.setHitList(hitsViewModel!!.hitList!!)
             recycler_hits.adapter = adapter
+
             val swipeHandler = object : SwipeToDeleteCallback(context!!) {
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     val adapter = recycler_hits.adapter as HitsAdapter

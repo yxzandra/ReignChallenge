@@ -1,4 +1,4 @@
-package com.example.reignchallenge.schema
+package com.example.reignchallenge.api.response
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

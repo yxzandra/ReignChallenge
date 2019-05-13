@@ -1,7 +1,6 @@
 package com.example.reignchallenge.util
 
 import android.text.format.DateUtils
-import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
 

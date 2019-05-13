@@ -1,10 +1,9 @@
-package com.example.reignchallenge.schema
+package com.example.reignchallenge.api.response
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-
-class Hit {
+class Hit{
 
     @SerializedName("created_at")
     @Expose
@@ -32,6 +31,6 @@ class Hit {
 
     @SerializedName("objectID")
     @Expose
-    var objectID: String? = null
+    var objectID: Long? = null
 
 }

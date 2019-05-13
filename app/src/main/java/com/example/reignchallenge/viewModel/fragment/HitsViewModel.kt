@@ -8,8 +8,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.reignchallenge.api.ApiInterface
 import com.example.reignchallenge.api.RetrofitClient
-import com.example.reignchallenge.schema.Hit
-import com.example.reignchallenge.schema.ObjectHits
+import com.example.reignchallenge.dataBase.DataBaseTransaction
+import com.example.reignchallenge.api.response.Hit
+import com.example.reignchallenge.api.response.ObjectHits
+import com.example.reignchallenge.dataBase.HitTable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -23,7 +25,7 @@ class HitsViewModel : Observable() {
     var hitsLabel: ObservableInt = ObservableInt(View.INVISIBLE)
     var messageLabel: ObservableField<String> = ObservableField("")
 
-    var hitList : List<Hit>? = null
+    var hitList : List<HitTable>? = null
 
     private lateinit var hitsObjectLiveData: MutableLiveData<ObjectHits>
 
@@ -60,9 +62,40 @@ class HitsViewModel : Observable() {
 
     private fun setList(hits: List<Hit>?) {
         setChanged()
-        hitList = hits
+        saveHits(hits)
         this.notifyObservers()
 
+    }
+
+    private fun saveHits(hits: List<Hit>?) {
+        val dataBaseTransaction = DataBaseTransaction()
+        hits?.forEach {
+            dataBaseTransaction.addHit(id = it.objectID!!,author = it.author!!,createAt = it.createdAt!!,title = getTitle(it), url = getUrl(it))
+        }
+
+        hitList = dataBaseTransaction.getAll()
+        Log.e(TAG,dataBaseTransaction.getAll().toString())
+    }
+
+    private fun getUrl(hit: Hit): String{
+        return when {
+            !hit.storyUrl.isNullOrEmpty() -> {
+                return hit.storyUrl!!
+            }
+            !hit.url.isNullOrEmpty() -> {
+                return hit.url!!
+            }
+            else -> ""
+        }
+    }
+
+    private fun getTitle(hit: Hit): String{
+        return when{
+            !hit.storyTitle.isNullOrEmpty() -> hit.storyTitle!!
+            !hit.title.isNullOrEmpty() -> hit.title!!
+            else -> ""
+
+        }
     }
 
 }

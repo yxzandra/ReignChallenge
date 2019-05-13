@@ -7,26 +7,27 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.reignchallenge.R
 import com.example.reignchallenge.databinding.CardHitsBinding
-import com.example.reignchallenge.schema.Hit
+import com.example.reignchallenge.api.response.Hit
+import com.example.reignchallenge.dataBase.HitTable
 import com.example.reignchallenge.viewModel.itemAdapter.ItemViewModel
 
 class HitsAdapter(private val fragmentManager: FragmentManager) : RecyclerView.Adapter<HitsAdapter.HitsAdapterViewHolder>() {
     val TAG = javaClass.simpleName
-    private var pullList: MutableList<Hit>? = null
+    private var hitListTable: MutableList<HitTable>? = null
 
     override fun getItemCount(): Int {
-        if (pullList == null)
+        if (hitListTable == null)
             return 0
-        return pullList!!.size
+        return hitListTable!!.size
     }
 
-    internal fun setPullList(pullList: List<Hit>) {
-        this.pullList = pullList.toMutableList()
+    internal fun setHitList(hitListTable: List<HitTable>) {
+        this.hitListTable = hitListTable.toMutableList()
         notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: HitsAdapterViewHolder, position: Int) {
-        holder.bindPull(pullList!![position], fragmentManager)
+        holder.bindHit(hitListTable!![position], fragmentManager)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HitsAdapterViewHolder {
@@ -37,7 +38,7 @@ class HitsAdapter(private val fragmentManager: FragmentManager) : RecyclerView.A
     }
 
     fun removeAt(position: Int) {
-        pullList?.removeAt(position)
+        hitListTable?.removeAt(position)
         notifyItemRemoved(position)
     }
 
@@ -46,9 +47,9 @@ class HitsAdapter(private val fragmentManager: FragmentManager) : RecyclerView.A
     ) :
         RecyclerView.ViewHolder(mItemHitsModel.cardHits) {
 
-        fun bindPull(pullItem: Hit, fragmentManager: FragmentManager) {
+        fun bindHit(hitItem: HitTable, fragmentManager: FragmentManager) {
             mItemHitsModel.hitsViewModel =
-                ItemViewModel(pullItem, fragmentManager)
+                ItemViewModel(hitItem, fragmentManager)
         }
     }
 }
