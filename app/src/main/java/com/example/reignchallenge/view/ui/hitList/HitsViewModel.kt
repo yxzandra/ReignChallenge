@@ -14,10 +14,11 @@ class HitsViewModel : BaseViewModel() {
 
     val hitListLive = MutableLiveData<List<HitTable>>()
 
-    fun fetchHitList() {
-        dataLoading.value = true
+    fun fetchHitList(isPulltoRefresh:Boolean) {
+        if (!isPulltoRefresh) dataLoading.value = true
+
         HitRepository.getInstance().getHitList { isSuccess, response ->
-            dataLoading.value = false
+            if (!isPulltoRefresh) dataLoading.value = false
             if (isSuccess) {
                 saveHits(response)
                 hitListLive.value = dataBaseTransaction.getAll()

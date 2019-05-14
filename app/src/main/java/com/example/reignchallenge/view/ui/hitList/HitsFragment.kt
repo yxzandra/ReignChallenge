@@ -33,7 +33,7 @@ class HitsFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        hitsFragmentBinding.fragmentHitsViewModel?.fetchHitList()
+        hitsFragmentBinding.fragmentHitsViewModel?.fetchHitList(swipeRefreshLayout.isRefreshing)
 
         setupAdapter()
         setupObservers()
@@ -43,7 +43,7 @@ class HitsFragment : Fragment(){
     private fun setRefreshListener() {
         swipeRefreshLayout.setOnRefreshListener {
             if (!Helpers.isNetworkAvailable(context!!)&& hitsFragmentBinding.fragmentHitsViewModel!!.hitListLive.value.isNullOrEmpty()|| Helpers.isNetworkAvailable(context!!))
-                hitsFragmentBinding.fragmentHitsViewModel!!.fetchHitList()
+                hitsFragmentBinding.fragmentHitsViewModel!!.fetchHitList(swipeRefreshLayout.isRefreshing)
             else
                 swipeRefreshLayout.isRefreshing = false
         }
