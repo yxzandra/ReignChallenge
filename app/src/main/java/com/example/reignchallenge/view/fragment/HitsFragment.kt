@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.reignchallenge.R
 import com.example.reignchallenge.databinding.FragmentHitsBinding
+import com.example.reignchallenge.util.Helpers
 import com.example.reignchallenge.util.SwipeToDeleteCallback
 import com.example.reignchallenge.view.adapter.HitsAdapter
 import com.example.reignchallenge.viewModel.fragment.HitsViewModel
@@ -53,14 +54,17 @@ class HitsFragment : Fragment(), Observer{
 
     private fun setRefreshListener() {
         swipeRefreshLayout.setOnRefreshListener {
-            hitsViewModel!!.fetchPullList()
+            if (!Helpers.isNetworkAvailable(context!!)&& hitsViewModel!!.hitList.isNullOrEmpty()|| Helpers.isNetworkAvailable(context!!))
+                hitsViewModel!!.fetchPullList(context!!)
+            else
+                swipeRefreshLayout.isRefreshing = false
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupListHitsView()
-        hitsViewModel!!.fetchPullList()
+        hitsViewModel!!.fetchPullList(context!!)
         setRefreshListener()
     }
 

@@ -1,5 +1,6 @@
 package com.example.reignchallenge.viewModel.fragment
 
+import android.content.Context
 import android.util.Log
 import android.view.View
 import androidx.databinding.ObservableField
@@ -12,12 +13,13 @@ import com.example.reignchallenge.dataBase.DataBaseTransaction
 import com.example.reignchallenge.api.response.Hit
 import com.example.reignchallenge.api.response.ObjectHits
 import com.example.reignchallenge.dataBase.HitTable
+import com.example.reignchallenge.util.Helpers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
 
-class HitsViewModel : Observable() {
+class HitsViewModel() : Observable() {
     val TAG = javaClass.simpleName
 
     var hitsProgress: ObservableInt = ObservableInt(View.VISIBLE)
@@ -26,55 +28,57 @@ class HitsViewModel : Observable() {
     var messageLabel: ObservableField<String> = ObservableField("")
 
     var hitList : List<HitTable>? = null
+    private val dataBaseTransaction = DataBaseTransaction()
 
-    private lateinit var hitsObjectLiveData: MutableLiveData<ObjectHits>
+    fun fetchPullList(context: Context) {
 
-    fun fetchPullList(): LiveData<ObjectHits> {
-        hitsObjectLiveData = MutableLiveData()
-        loadListHits()
-        return hitsObjectLiveData
+        if (!Helpers.isNetworkAvailable(context)) {
+            if (hitList.isNullOrEmpty())
+                setList()
+
+            hitsProgress.set(View.GONE)
+            hitsLabel.set(View.GONE)
+            hitsRecycler.set(View.VISIBLE)
+
+        }else
+            loadListHits()
     }
 
     private fun loadListHits() {
         val apiService = RetrofitClient.getClient().create(ApiInterface::class.java)
-        GlobalScope.launch ( Dispatchers.Main) {
+        GlobalScope.launch(Dispatchers.Main) {
             try {
                 apiService.getHitsAsync("android").await().let {
                     hitsProgress.set(View.GONE)
 
-                    if (it.isSuccessful && it.body() != null){
+                    if (it.isSuccessful && it.body() != null) {
                         hitsLabel.set(View.GONE)
                         hitsRecycler.set(View.VISIBLE)
-                        setList(it.body()!!.hits)
-                        hitsObjectLiveData.value= it.body()
-                    }else {
+                        saveHits(it.body()!!.hits)
+                        setList()
+                    } else {
                         hitsLabel.set(View.VISIBLE)
                         messageLabel.set("Problem conection")
-                        hitsObjectLiveData.value = null
                     }
 
                 }
-            }catch (exception : Exception) {
+            } catch (exception: Exception) {
                 Log.e(TAG, "Failed to fetch data!")
             }
         }
+
     }
 
-    private fun setList(hits: List<Hit>?) {
+    private fun setList() {
         setChanged()
-        saveHits(hits)
+        hitList = dataBaseTransaction.getAll()
         this.notifyObservers()
-
     }
 
     private fun saveHits(hits: List<Hit>?) {
-        val dataBaseTransaction = DataBaseTransaction()
         hits?.forEach {
             dataBaseTransaction.addHit(id = it.objectID!!,author = it.author!!,createAt = it.createdAt!!,title = getTitle(it), url = getUrl(it))
         }
-
-        hitList = dataBaseTransaction.getAll()
-        Log.e(TAG,dataBaseTransaction.getAll().toString())
     }
 
     private fun getUrl(hit: Hit): String{

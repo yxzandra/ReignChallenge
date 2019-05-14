@@ -1,8 +1,21 @@
 package com.example.reignchallenge.util
 
+import android.content.Context
 import android.text.format.DateUtils
+import android.util.Log
+import java.io.IOException
+import java.net.HttpURLConnection
+import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
+import android.net.NetworkInfo
+import androidx.core.content.ContextCompat.getSystemService
+import android.net.ConnectivityManager
+import androidx.core.content.ContextCompat.getSystemService
+
+
+
+
 
 object Helpers{
     val TAG = javaClass.simpleName
@@ -32,5 +45,12 @@ object Helpers{
             dateString = "$minutes m"
 
         return dateString
+    }
+
+    @JvmStatic
+    fun isNetworkAvailable(context: Context): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
+        val activeNetworkInfo = connectivityManager!!.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
     }
 }
