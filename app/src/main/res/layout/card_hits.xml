@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
-        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
     <data>
+        <import type="android.view.View" />
+
         <variable
-                name="hitsViewModel"
-                type="com.example.reignchallenge.viewModel.itemAdapter.ItemViewModel"/>
+                name="hitsData"
+                type="com.example.reignchallenge.model.dataBase.HitTable"/>
     </data>
     <LinearLayout
-            android:id="@+id/card_hits"
+            android:id="@+id/cardHits"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="@{hitsViewModel::onItemClick}"
             android:padding="@dimen/card_padding"
             android:layout_margin="@dimen/card_margin"
             android:background="@android:color/white">
@@ -20,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-                android:text="@{hitsViewModel.hitsTitle}"
+                android:text="@{hitsData.title}"
                 android:textColor="@color/colorPrimaryText"
                 tools:text="India orders anti-trust probe of Google for alleged Android abuse"
                 android:lines="3"
@@ -30,7 +32,6 @@
                 android:id="@+id/author_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{hitsViewModel.hitsSubtitle}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
                 android:textColor="@color/colorSecondaryText"
                 tools:text="wtmt - 2019-05-11T14:28:11.000Z"/>

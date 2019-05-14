@@ -2,16 +2,12 @@ package com.example.reignchallenge.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.reignchallenge.R
 import com.example.reignchallenge.databinding.CardHitsBinding
-import com.example.reignchallenge.dataBase.DataBaseTransaction
-import com.example.reignchallenge.dataBase.HitTable
-import com.example.reignchallenge.viewModel.itemAdapter.ItemViewModel
+import com.example.reignchallenge.model.dataBase.DataBaseTransaction
+import com.example.reignchallenge.model.dataBase.HitTable
 
-class HitsAdapter(private val fragmentManager: FragmentManager) : RecyclerView.Adapter<HitsAdapter.HitsAdapterViewHolder>() {
+class HitsAdapter : RecyclerView.Adapter<HitAdapterViewHolder>() {
     val TAG = javaClass.simpleName
     private var hitListTable: MutableList<HitTable>? = null
 
@@ -26,15 +22,14 @@ class HitsAdapter(private val fragmentManager: FragmentManager) : RecyclerView.A
         notifyDataSetChanged()
     }
 
-    override fun onBindViewHolder(holder: HitsAdapterViewHolder, position: Int) {
-        holder.bindHit(hitListTable!![position], fragmentManager)
+    override fun onBindViewHolder(holder: HitAdapterViewHolder, position: Int) {
+        holder.setup(hitListTable!![position])
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HitsAdapterViewHolder {
-        val itemPeopleBinding: CardHitsBinding = DataBindingUtil.inflate( LayoutInflater.from(parent.context), R.layout.card_hits,
-            parent, false)
-
-        return HitsAdapterViewHolder(itemPeopleBinding)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HitAdapterViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        val dataBinding = CardHitsBinding.inflate(inflater, parent, false)
+        return HitAdapterViewHolder(dataBinding)
     }
 
     fun removeAt(position: Int) {
@@ -44,14 +39,5 @@ class HitsAdapter(private val fragmentManager: FragmentManager) : RecyclerView.A
         notifyItemRemoved(position)
     }
 
-    class HitsAdapterViewHolder(
-        var mItemHitsModel: CardHitsBinding
-    ) :
-        RecyclerView.ViewHolder(mItemHitsModel.cardHits) {
 
-        fun bindHit(hitItem: HitTable, fragmentManager: FragmentManager) {
-            mItemHitsModel.hitsViewModel =
-                ItemViewModel(hitItem, fragmentManager)
-        }
-    }
 }

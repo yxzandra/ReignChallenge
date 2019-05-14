@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/hitListFragment">
+    <fragment
+        android:id="@+id/hitListFragment"
+        android:name="com.example.reignchallenge.view.ui.hitList.HitsFragment"
+        android:label="Hits List"
+        tools:layout="@layout/fragment_hits">
+        <action
+            android:id="@+id/action_hitListFragment_to_hitDetailFragment"
+            app:destination="@id/hitDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/hitDetailFragment"
+        android:name="com.example.reignchallenge.view.ui.hitDetail.HitsDetailFragment"
+        android:label="Hit Detail">
+        <argument
+            android:name="url"
+            app:argType="string" />
+    </fragment>
+</navigation>

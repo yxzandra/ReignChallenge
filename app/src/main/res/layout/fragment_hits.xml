@@ -4,16 +4,16 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
     <data>
+        <import type="android.view.View" />
+
         <variable
                 name="fragmentHitsViewModel"
-                type="com.example.reignchallenge.viewModel.fragment.HitsViewModel"/>
+                type="com.example.reignchallenge.view.ui.hitList.HitsViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/fragment_pull"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:showIn="@layout/activity_main"
             android:background="@android:color/white">
 
         <ProgressBar
@@ -24,7 +24,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:visibility="@{fragmentHitsViewModel.hitsProgress}"/>
+                android:visibility="@{safeUnbox(fragmentHitsViewModel.dataLoading) ? View.VISIBLE : View.GONE}"/>
 
         <TextView
                 android:id="@+id/textview_hits"
@@ -35,8 +35,8 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 android:gravity="center"
-                android:text="@{fragmentHitsViewModel.messageLabel}"
-                android:visibility="@{fragmentHitsViewModel.hitsLabel}"/>
+                android:text="No hits to display"
+                android:visibility="@{safeUnbox(fragmentHitsViewModel.empty) ? View.VISIBLE : View.GONE}" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/swipeRefreshLayout"
@@ -48,8 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:listitem="@layout/card_hits"
-                    android:background="@color/colorDivider"
-                    android:visibility="@{fragmentHitsViewModel.hitsRecycler}"/>
+                    android:visibility="@{safeUnbox(fragmentHitsViewModel.dataLoading) ? View.GONE : View.VISIBLE}"/>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

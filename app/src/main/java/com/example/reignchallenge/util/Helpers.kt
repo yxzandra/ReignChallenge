@@ -12,9 +12,7 @@ import android.net.NetworkInfo
 import androidx.core.content.ContextCompat.getSystemService
 import android.net.ConnectivityManager
 import androidx.core.content.ContextCompat.getSystemService
-
-
-
+import com.example.reignchallenge.model.dataBase.HitTable
 
 
 object Helpers{
@@ -53,4 +51,17 @@ object Helpers{
         val activeNetworkInfo = connectivityManager!!.activeNetworkInfo
         return activeNetworkInfo != null && activeNetworkInfo.isConnected
     }
+
+    @JvmStatic
+     fun hitsSubtitle(mHitsItem : HitTable): String{
+         var subtitle = ""
+
+         if (mHitsItem.author.isNotEmpty())
+             subtitle = mHitsItem.author
+
+         if (mHitsItem.createdAt.isNotEmpty())
+             subtitle += " - " + Helpers.differenceWithCurrentDate(mHitsItem.createdAt)
+
+         return subtitle
+     }
 }

@@ -1,4 +1,4 @@
-package com.example.reignchallenge.view.fragment
+package com.example.reignchallenge.view.ui.hitDetail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -22,7 +22,7 @@ class HitsDetailFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        url = arguments!!.getString(getString(R.string.bundle_url))
+        val url = arguments?.let { HitsDetailFragmentArgs.fromBundle(it).url }
         webHitsDetail.webViewClient= WebViewClient()
         webHitsDetail.settings.setSupportZoom(true)
         webHitsDetail.settings.javaScriptEnabled = true

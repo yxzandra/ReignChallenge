@@ -1,4 +1,4 @@
-package com.example.reignchallenge.dataBase
+package com.example.reignchallenge.model.dataBase
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
