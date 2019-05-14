@@ -1,4 +1,4 @@
-package com.example.reignchallenge.viewModel.fragment;
+package com.example.reignchallenge.viewModel.fragment
 
 import android.util.Log
 import android.view.View

@@ -3,6 +3,7 @@ package com.example.reignchallenge.viewModel.itemAdapter
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.View.INVISIBLE
 import android.widget.Toast
 import androidx.databinding.BaseObservable
 import androidx.fragment.app.FragmentManager
@@ -11,10 +12,8 @@ import com.example.reignchallenge.R
 import com.example.reignchallenge.dataBase.HitTable
 import com.example.reignchallenge.util.Helpers
 import com.example.reignchallenge.view.fragment.HitsDetailFragment
-import com.example.reignchallenge.view.fragment.HitsFragment
 
-
-class ItemViewModel(var mHitsItem: HitTable, var fragmentManager: FragmentManager): BaseObservable() {
+class ItemViewModel(private var mHitsItem: HitTable, private var fragmentManager: FragmentManager): BaseObservable() {
     val TAG = javaClass.simpleName
 
     fun hitsTitle(): String{
@@ -50,13 +49,16 @@ class ItemViewModel(var mHitsItem: HitTable, var fragmentManager: FragmentManage
     }
 
     private fun openWebViewFragment(url: String, view : View) {
+        notifyChange()
         val bundle = Bundle()
         bundle.putString(view.context.getString(R.string.bundle_url), url)
         val fragmentTransaction : FragmentTransaction = fragmentManager.beginTransaction()
         val repositoryFragment = HitsDetailFragment()
         repositoryFragment.arguments = bundle
-        fragmentTransaction.add(R.id.fragment_container,repositoryFragment)
-            .addToBackStack(HitsFragment().TAG)
+        fragmentManager.fragments.lastOrNull()!!.view!!.visibility= INVISIBLE
+
+        fragmentTransaction.add(R.id.fragment_container,repositoryFragment, HitsDetailFragment().TAG )
+            .addToBackStack(HitsDetailFragment().TAG)
             .commit()
     }
 

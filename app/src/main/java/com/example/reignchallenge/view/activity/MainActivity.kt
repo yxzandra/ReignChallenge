@@ -2,6 +2,7 @@ package com.example.reignchallenge.view.activity
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -36,6 +37,11 @@ class MainActivity : AppCompatActivity(), FragmentManager.OnBackStackChangedList
 
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        supportFragmentManager.fragments.lastOrNull()!!.view!!.visibility= VISIBLE
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         supportFragmentManager.popBackStack()
         return true
@@ -45,7 +51,7 @@ class MainActivity : AppCompatActivity(), FragmentManager.OnBackStackChangedList
         val fragmentManager: FragmentManager = supportFragmentManager
         val fragmentTransaction : FragmentTransaction = fragmentManager.beginTransaction()
         val repositoryFragment = HitsFragment()
-        fragmentTransaction.replace(R.id.fragment_container, repositoryFragment)
+        fragmentTransaction.replace(R.id.fragment_container, repositoryFragment,HitsFragment().TAG)
             .addToBackStack(HitsFragment().TAG)
             .commit()
     }

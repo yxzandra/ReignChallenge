@@ -9,10 +9,11 @@ import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_hits_detail.*
 import android.webkit.WebView
 import com.example.reignchallenge.R
-import kotlinx.android.synthetic.main.fragment_hits.*
+import android.webkit.WebChromeClient
 
 
 class HitsDetailFragment : Fragment(){
+    val TAG = javaClass.simpleName
     private var url: String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -24,20 +25,28 @@ class HitsDetailFragment : Fragment(){
         url = arguments!!.getString(getString(R.string.bundle_url))
         webHitsDetail.webViewClient= WebViewClient()
         webHitsDetail.settings.setSupportZoom(true)
+        webHitsDetail.settings.javaScriptEnabled = true
+        webHitsDetail.webChromeClient = WebChromeClient()
+
         webHitsDetail.settings.builtInZoomControls = true
 
 
         if (url!!.contains(".pdf"))
-            webHitsDetail.loadUrl("https://docs.google.com/gview?embedded=true&url="+url)
+            webHitsDetail.loadUrl("https://docs.google.com/gview?embedded=true&url=$url")
         else
             webHitsDetail.loadUrl(url)
 
         webHitsDetail.webViewClient = object : WebViewClient() {
 
             override fun onPageFinished(view: WebView, url: String) {
-                progress_hits_detail.visibility = View.GONE
-                webHitsDetail.visibility = View.VISIBLE
+                progress_hits_detail?.visibility = View.GONE
+                webHitsDetail?.visibility = View.VISIBLE
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        webHitsDetail.stopLoading()
     }
 }
