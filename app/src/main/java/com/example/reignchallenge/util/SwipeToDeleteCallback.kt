@@ -1,4 +1,4 @@
-package com.example.reignchallenge.util;
+package com.example.reignchallenge.util
 
 import android.content.Context
 import android.graphics.*
