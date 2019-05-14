@@ -5,7 +5,6 @@ import com.example.reignchallenge.model.api.HitRepository
 import com.example.reignchallenge.model.api.response.Hit
 import com.example.reignchallenge.model.dataBase.DataBaseTransaction
 import com.example.reignchallenge.model.dataBase.HitTable
-import com.example.reignchallenge.util.Helpers
 import com.example.reignchallenge.view.base.BaseViewModel
 
 class HitsViewModel : BaseViewModel() {

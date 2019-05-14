@@ -1,18 +1,11 @@
 package com.example.reignchallenge.util
 
 import android.content.Context
+import android.net.ConnectivityManager
 import android.text.format.DateUtils
-import android.util.Log
-import java.io.IOException
-import java.net.HttpURLConnection
-import java.net.URL
+import com.example.reignchallenge.model.dataBase.HitTable
 import java.text.SimpleDateFormat
 import java.util.*
-import android.net.NetworkInfo
-import androidx.core.content.ContextCompat.getSystemService
-import android.net.ConnectivityManager
-import androidx.core.content.ContextCompat.getSystemService
-import com.example.reignchallenge.model.dataBase.HitTable
 
 
 object Helpers{
@@ -60,7 +53,7 @@ object Helpers{
              subtitle = mHitsItem.author
 
          if (mHitsItem.createdAt.isNotEmpty())
-             subtitle += " - " + Helpers.differenceWithCurrentDate(mHitsItem.createdAt)
+             subtitle += " - " + differenceWithCurrentDate(mHitsItem.createdAt)
 
          return subtitle
      }
